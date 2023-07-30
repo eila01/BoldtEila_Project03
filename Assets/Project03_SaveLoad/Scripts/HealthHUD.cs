@@ -15,11 +15,23 @@ public class HealthHUD : MonoBehaviour
     }
     private void Update()
     {
-        
+        if(_health == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        transform.position = _health.transform.position + _offset;
     }
 
     public void ScaleHealthBar()
     {
-        
+        float max = _health.MaxHealth;
+        float current = _health.CurrentHealth;
+
+        float newXScale = (1 / max) * current;
+          newXScale = Mathf.Clamp(newXScale, 0, 1);
+
+        _healthFillImage.transform.localScale = new Vector3(newXScale, 1, 1);
+
     }
 }

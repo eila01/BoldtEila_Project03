@@ -17,12 +17,17 @@ public class Health : MonoBehaviour
     {
         _currentHealth = _maxHealth;
     }
+    
     public void TakeDamage(int damageAmount)
     {
         Debug.Log(damageAmount);
+
         damageAmount = System.Math.Abs(damageAmount);
+
         _currentHealth -= damageAmount;
+
         Damaged.Invoke();
+
         if(_currentHealth <= 0)
         {
             Kill();
