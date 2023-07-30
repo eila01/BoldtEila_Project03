@@ -1,16 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// using UnityEngine.Events;
 
 public class SaveSystem : MonoBehaviour
 {
-    [SerializeField] GameObject _playerPos;
-    // asking for health
-    [SerializeField] private Health _health;
+   // public UnityEvent Save;
+
+    public GameObject _playerPos;
+    // asking for player health
+    [SerializeField]  private Health _health;
+
+   // public HealthHUD _healthHUD;
+
+    void Start()
+    {
+        LoadData();
+    }
+
 
     public void SaveData()
     {
-        float max = _health.MaxHealth;
+        float max = _health.CurrentHealth;
         
         // player position
         PlayerPrefs.SetFloat("PlayerX", _playerPos.transform.position.x);
@@ -24,19 +35,23 @@ public class SaveSystem : MonoBehaviour
 
         // player current health
         PlayerPrefs.SetFloat("PlayerCurrentHealth", max);
+        Debug.Log("Current Health" + max);
+        // player other stats...
 
-        // player known stats
-
+        PlayerPrefs.Save();
+       // Save.Invoke();
     }
     public void LoadData()
     {
         // load position
-        transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
+        _playerPos.transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
 
         // load rotation
-        transform.rotation = Quaternion.Euler(PlayerPrefs.GetFloat("PlayerRotationX"), PlayerPrefs.GetFloat("PlayerRotationY"), PlayerPrefs.GetFloat("PlayerRotationZ"));
+        _playerPos.transform.rotation = Quaternion.Euler(PlayerPrefs.GetFloat("PlayerRotationX"), PlayerPrefs.GetFloat("PlayerRotationY"), PlayerPrefs.GetFloat("PlayerRotationZ"));
 
         // load health
         PlayerPrefs.GetInt("PlayerCurrentHealth");
+        //_healthHUD.ScaleHealthBar();
+
     }
 }
