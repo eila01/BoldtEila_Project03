@@ -37,5 +37,11 @@ public class PlayerController : MonoBehaviour
         _rb.MoveRotation(_rb.rotation * deltaRotation);
     }
 
-    
+
+     void OnDrawGizmosSelected()
+    {
+        // Player facing forward
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, new Vector3(0,0.8f,5));
+    }
 }
