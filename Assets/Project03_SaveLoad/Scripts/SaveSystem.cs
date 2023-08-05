@@ -2,22 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // using UnityEngine.Events;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class SaveSystem : MonoBehaviour
 {
    // public UnityEvent Save;
 
     public GameObject _playerPos;
+
+    
     // asking for player health
     [SerializeField]  private Health _health;
 
-   // public HealthHUD _healthHUD;
+    // Player Stats
+    [SerializeField] public TextMeshProUGUI _uiHealthText;
+    [SerializeField] public TextMeshProUGUI _uiPowerText;
+    [SerializeField] public TextMeshProUGUI _uiDefenseText;
+
+    public int _healthNum = 100;
+    public int _powerNum = 2;
+    public int _defenseNum = 5;
 
     void Start()
     {
         LoadData();
+        _uiHealthText.text = "Health: " + _healthNum;
+        _uiPowerText.text = "Power: " + _powerNum;
+        _uiDefenseText.text = "Defense: " + _defenseNum;
+
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            _healthNum -= 5;
+            _uiHealthText.text = "Health: " + _healthNum;
+            if(_healthNum <= 0)
+            {
+                _healthNum = 100;
+                LoadData();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            _powerNum += 1;
+            _uiPowerText.text = "Power: " + _powerNum;
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            _defenseNum += 1;
+            _uiDefenseText.text = "Defense: " + _defenseNum;
+        }
+    }
 
     public void SaveData()
     {
@@ -36,7 +75,11 @@ public class SaveSystem : MonoBehaviour
         // player current health
         PlayerPrefs.SetFloat("PlayerCurrentHealth", max);
         Debug.Log("Current Health" + max);
+
         // player other stats...
+        PlayerPrefs.SetInt("PlayerHealthNum", _healthNum);
+        PlayerPrefs.SetInt("PlayerPowerNum", _powerNum);
+        PlayerPrefs.SetInt("PlayerDefenseNum", _defenseNum);
 
         PlayerPrefs.Save();
        // Save.Invoke();
@@ -52,6 +95,8 @@ public class SaveSystem : MonoBehaviour
         // load health
         PlayerPrefs.GetInt("PlayerCurrentHealth");
         //_healthHUD.ScaleHealthBar();
-
+        PlayerPrefs.GetInt("PlayerHealthNum");
+        PlayerPrefs.GetInt("PlayerPowerNum");
+        PlayerPrefs.GetInt("PlayerDefenseNum");
     }
 }
