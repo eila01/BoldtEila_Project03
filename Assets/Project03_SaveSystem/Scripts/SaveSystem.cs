@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -82,7 +81,7 @@ public class SaveSystem : MonoBehaviour
         PlayerPrefs.SetInt("PlayerDefenseNum", _defenseNum);
 
         PlayerPrefs.Save();
-       // Save.Invoke();
+       
     }
     public void LoadData()
     {
